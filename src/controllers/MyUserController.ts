@@ -2,9 +2,6 @@ import { Request, Response } from "express";
 import User from "../models/user";
 
 const createCurrentUser = async(req: Request , res: Response)=>{
-  //check existing user 
-  //create user
-  //return user object to calling client
   try{
     const { auth0Id }= req.body;
     const existingUser = await User.findOne({
@@ -25,8 +22,37 @@ const createCurrentUser = async(req: Request , res: Response)=>{
       msg:"error when creating user"
     })
   }
-
 }
+
+
+const updateCurrentUser = async (req: Request , res : Response)=>{
+  try{
+    const {name , addressLine1 ,country , city } = req.body
+    const user = await User.findById(req.userId)
+
+    if (!user){
+      return res.status(404).json({
+        msg : "user not found"
+      })
+    }
+
+    user.name = name;
+    user.addressLine1 = addressLine1; 
+    user.country = country ;
+    user.city = city ;
+
+    await user.save()
+
+    res.send(user)
+
+  }catch(error){
+    console.log(" error while updating user info MyUserController.ts",error)
+    res.status(404).json({
+      msg:"couldnt update user!"
+    })
+  }
+}
+
 
 export default {
   createCurrentUser,
