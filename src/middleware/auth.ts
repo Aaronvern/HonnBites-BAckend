@@ -50,8 +50,4 @@ const jwtParse = async (req: Request ,res: Response , next: NextFunction )=>{
 
 }
 
-
-export default {
-  jwtCheck,
-  jwtParse
-}
+export {jwtCheck, jwtParse}
