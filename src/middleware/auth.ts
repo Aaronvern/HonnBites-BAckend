@@ -20,7 +20,6 @@ const jwtCheck = auth({
 
 const jwtParse = async (req: Request ,res: Response , next: NextFunction )=>{
   const { authorization } = req.headers;
-  
   if(!authorization || !authorization.startsWith("Bearer ")){
     return res.sendStatus(404).json({
       msg: "user not authorised" 
