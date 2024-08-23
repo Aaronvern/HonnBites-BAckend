@@ -1,6 +1,28 @@
 import { Request, Response } from "express";
 import User from "../models/user";
 
+
+
+
+const getCurrentUser = async(req: Request , res: Response )=>{
+  try{
+    const currentUser = await User.findOne({_id: req.userId})
+    if(!currentUser){
+      return res.status(404).json({
+        msg: " user not found"
+      })
+    }
+    res.json(currentUser)
+
+  }catch(error){
+    console.log("MyUserController::getCurrentUser",error)
+    res.status(500).json({
+      msg:"error when getting user"
+    })
+  }
+}
+
+
 const createCurrentUser = async(req: Request , res: Response)=>{
   try{
     const { auth0Id }= req.body;
@@ -24,7 +46,6 @@ const createCurrentUser = async(req: Request , res: Response)=>{
   }
 }
 
-
 const updateCurrentUser = async (req: Request , res : Response)=>{
   try{
     const {name , addressLine1 ,country , city } = req.body
@@ -42,7 +63,6 @@ const updateCurrentUser = async (req: Request , res : Response)=>{
     user.city = city ;
 
     await user.save()
-
     res.send(user)
 
   }catch(error){
@@ -55,6 +75,7 @@ const updateCurrentUser = async (req: Request , res : Response)=>{
 
 
 export default {
+  getCurrentUser ,
   createCurrentUser,
   updateCurrentUser
 }
