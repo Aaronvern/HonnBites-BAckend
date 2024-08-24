@@ -3,7 +3,6 @@ import multer from "multer";
 import MyRestaurantController from "../controllers/MyRestaurantController";
 
 const router = express.Router();
-
 const storage = multer.memoryStorage()
 const upload = multer({
   storage:storage,

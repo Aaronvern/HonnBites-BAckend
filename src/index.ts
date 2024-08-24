@@ -29,7 +29,7 @@ app.get("/server-check",(req:Request,res:Response)=>{
 })
 
 app.use("/api/my/user",MyUserRoute)
-app.use("api/my/user/restaurant",MyRestaurantRoute)
+app.use("/api/my/restaurant",MyRestaurantRoute) // typo fixed
 
 app.listen(port,()=>{
     console.log("listening on port: "+port)
